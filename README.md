@@ -21,7 +21,7 @@ In this project, we are simulating a scenario where philosophers sit around a ro
 
 1. Clone the repository:
    ```bash
-   git@github.com:evan-ite/philosophers.git
+   git clone git@github.com:evan-ite/philosophers.git
    ```
 
 2. Navigate to the project directory:
