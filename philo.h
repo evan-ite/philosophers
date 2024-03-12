@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/12 16:09:58 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:25:08 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
 
 // Error messages
 # define ERR_INPUT "./philo number_of_philosophers time_to_die time_to_eat \
@@ -27,10 +29,12 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]"
 
 // Structures
 typedef struct s_philo {
-	pthread_t	id;
-	int		state;
-	int		l_fork;
-	int		r_fork;
+	pthread_t	thread_id;
+	int		id;
+	// int		state;
+	int		l_fork[2];
+	int		r_fork[2];
+	struct s_meta	*meta;
 }	t_philo;
 
 typedef struct s_meta {
@@ -39,6 +43,7 @@ typedef struct s_meta {
 	int				t_eat;
 	int				t_sleep;
 	int				n_must_eat;
+	int				all_alive;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 }	t_meta;

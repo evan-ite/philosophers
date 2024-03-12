@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/12 16:08:18 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:18:17 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ void	init_philos(t_meta *meta)
 	i = 0;
 	while (i < meta->n_philos)
 	{
+		meta->philos[i].id = i;
 		meta->philos[i].state = 0;
-		meta->philos[i].l_fork = i;
-		meta->philos[i].r_fork = i % (meta->n_philos - 1);
+		meta->philos[i].l_fork[0] = i;
+		meta->philos[i].r_fork[0] = i % (meta->n_philos - 1);
+		meta->philos[i].l_fork[1] = 1;
+		meta->philos[i].r_fork[1] = 1;
+		meta->philos[i].meta = meta;
 		i++;
 	}
 }
@@ -46,6 +50,7 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	meta->t_die = ft_atoi(argv[2]);
 	meta->t_eat = ft_atoi(argv[3]);
 	meta->t_sleep = ft_atoi(argv[4]);
+	meta->all_alive = 1;
 	if (argc == 6)
 		meta->n_must_eat = ft_atoi(argv[5]);
 	else
