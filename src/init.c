@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/13 12:56:23 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:23:51 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	init_philos(t_meta *meta)
 	while (i < meta->n_philos)
 	{
 		meta->philos[i].id = i;
-		meta->philos[i].last_ate = get_time(meta);
+		meta->philos[i].last_ate = meta->start_time;
 		meta->philos[i].l_fork[0] = i;
 		meta->philos[i].r_fork[0] = (i +  1) % meta->n_philos;
 		meta->philos[i].l_fork[1] = 1;
@@ -51,6 +51,7 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	meta->t_die = ft_atoi(argv[2]);
 	meta->t_eat = ft_atoi(argv[3]);
 	meta->t_sleep = ft_atoi(argv[4]);
+	meta->start_time = get_time(meta, 1);
 	meta->all_alive = 1;
 	if (argc == 6)
 		meta->n_must_eat = ft_atoi(argv[5]);
@@ -63,9 +64,7 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	if (init_forks(meta))
 		return (EXIT_FAILURE);
 	init_philos(meta);
-	// if (pthread_mutex_init(&meta->time_mutex, NULL) != 0)
-	// 		return (exit_error(ERR_MUTEX, NULL, 3, meta));
-	// if (pthread_mutex_init(&meta->print_mutex, NULL) != 0)
-	// 		return (exit_error(ERR_MUTEX, NULL, 3, meta));
+	if (pthread_mutex_init(&meta->print_mutex, NULL) != 0)
+			return (exit_error(ERR_MUTEX, NULL, 3, meta));
 	return (EXIT_SUCCESS);
 }

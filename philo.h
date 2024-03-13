@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/13 12:49:57 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:33:15 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@ typedef struct s_philo {
 }	t_philo;
 
 typedef struct s_meta {
+	pthread_t		monitor_id;
 	int				n_philos;
 	int				t_die;
 	int				t_eat;
 	int				t_sleep;
 	int				n_must_eat;
 	int				all_alive;
+	long long		start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	time_mutex;
 	pthread_mutex_t	print_mutex;
 }	t_meta;
 
@@ -56,7 +57,7 @@ int	run(t_meta *meta);
 
 // Utils
 int		exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
-long long	get_time(t_meta *meta);
+long long	get_time(t_meta *, int start);
 void	print_lock(t_philo *philo, char *state);
 
 // Libft

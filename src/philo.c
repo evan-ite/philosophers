@@ -6,29 +6,15 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/13 12:52:20 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:39:49 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-long long	get_time(t_meta *meta)
-{
-	struct timeval	time;
-	long long	time_ms;
-
-	meta->t_die++;
-	// pthread_mutex_lock(&meta->time_mutex);
-	gettimeofday(&time, NULL);
-	// pthread_mutex_unlock(&meta->time_mutex);
-	time_ms = (time.tv_usec / 1000LL);
-	return (time_ms);
-}
-
 int	sleeping(t_philo *philo)
 {
-	// print_lock(philo, "sleeping");
-	printf("%lld %i is sleeping\n", get_time(philo->meta), philo->id);
+	print_lock(philo, "sleeping");
 	usleep(philo->meta->t_sleep * 1000);
 	return (EXIT_SUCCESS);
 }
@@ -54,13 +40,13 @@ int	eat(t_philo *philo)
 		}
 		if (!philo->r_fork[1] && !philo->l_fork[1])
 		{
-			printf("%lld %i is eating\n", get_time(philo->meta), philo->id);
+			print_lock(philo, "eating");
 			usleep(philo->meta->t_eat * 1000);
 			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
 			philo->l_fork[1] = 1;
 			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork[0]]);
 			philo->r_fork[1] = 1;
-			philo->last_ate = get_time(philo->meta);
+			philo->last_ate = get_time(philo->meta, 0);
 			break ;
 		}
 	}
@@ -69,7 +55,7 @@ int	eat(t_philo *philo)
 
 int	think(t_philo *philo)
 {
-	printf("%lld %i is thinking\n", get_time(philo->meta), philo->id);
+	print_lock(philo, "thinking");
 	return (EXIT_SUCCESS);
 }
 
@@ -87,6 +73,25 @@ void	*start_philo(void *void_philo)
 	return (NULL);
 }
 
+void	*monitor(void *void_meta)
+{
+	t_meta	*meta;
+	int		i;
+
+	meta = (t_meta *)void_meta;
+	i = 0;
+	while (i < meta->n_philos)
+	{
+		if ((get_time(meta, 0) - meta->philos[i].last_ate) >= meta->t_die)
+		{
+			meta->all_alive = 0;
+			print_lock(&meta->philos[i], "dead");
+			break ;
+		}
+	}
+	return (NULL);
+}
+
 int	run(t_meta *meta)
 {
 	int	i;
@@ -98,6 +103,8 @@ int	run(t_meta *meta)
 			return (exit_error(ERR_THD, NULL, 3, meta));
 		i++;
 	}
+	if (pthread_create(&meta->monitor_id, NULL, monitor, &meta) != 0)
+		return (exit_error(ERR_THD, NULL, 3, meta));
 	i = 0;
 	while (i < meta->n_philos)
 	{
