@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/13 14:39:49 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:01:52 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	eat(t_philo *philo)
 		{
 			print_lock(philo, "eating");
 			usleep(philo->meta->t_eat * 1000);
-			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
-			philo->l_fork[1] = 1;
-			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork[0]]);
 			philo->r_fork[1] = 1;
+			philo->l_fork[1] = 1;
 			philo->last_ate = get_time(philo->meta, 0);
+			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
+			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork[0]]);
 			break ;
 		}
 	}
@@ -59,6 +59,17 @@ int	think(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
+int	check_death(t_philo *philo)
+{
+	if ((get_time(philo->meta, 0) - philo->last_ate) >= philo->meta->t_die)
+	{
+		philo->meta->all_alive = 0;
+		print_lock(philo, "dead");
+		return (1);
+	}
+	return (0);
+}
+
 void	*start_philo(void *void_philo)
 {
 	t_philo	*philo;
@@ -66,9 +77,26 @@ void	*start_philo(void *void_philo)
 	philo = (t_philo *)void_philo;
 	while (philo->meta->all_alive)
 	{
-		sleeping(philo);
-		think(philo);
-		eat(philo);
+		if (philo->id % 2 == 0)
+		{
+			sleeping(philo);
+			if (check_death(philo))
+				break;
+			think(philo);
+			if (check_death(philo))
+				break;
+			eat(philo);
+		}
+		else
+		{
+			eat(philo);
+			sleeping(philo);
+			if (check_death(philo))
+				break;
+			think(philo);
+			if (check_death(philo))
+				break;
+		}
 	}
 	return (NULL);
 }
@@ -80,14 +108,16 @@ void	*monitor(void *void_meta)
 
 	meta = (t_meta *)void_meta;
 	i = 0;
-	while (i < meta->n_philos)
+	while (meta->all_alive == 1)
 	{
+		// printf("TEST %i\n", i);
 		if ((get_time(meta, 0) - meta->philos[i].last_ate) >= meta->t_die)
 		{
 			meta->all_alive = 0;
 			print_lock(&meta->philos[i], "dead");
-			break ;
 		}
+		i++;
+		i = i % meta->n_philos;
 	}
 	return (NULL);
 }
@@ -96,6 +126,8 @@ int	run(t_meta *meta)
 {
 	int	i;
 
+	// if (pthread_create(&meta->monitor_id, NULL, monitor, meta) != 0)
+	// 	return (exit_error(ERR_THD, NULL, 3, meta));
 	i = 0;
 	while (i < meta->n_philos)
 	{
@@ -103,8 +135,6 @@ int	run(t_meta *meta)
 			return (exit_error(ERR_THD, NULL, 3, meta));
 		i++;
 	}
-	if (pthread_create(&meta->monitor_id, NULL, monitor, &meta) != 0)
-		return (exit_error(ERR_THD, NULL, 3, meta));
 	i = 0;
 	while (i < meta->n_philos)
 	{
