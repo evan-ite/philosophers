@@ -6,13 +6,13 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/12 17:18:17 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:56:23 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	init_forks(t_meta *meta)
+int	init_forks(t_meta *meta)
 {
 	int	i;
 
@@ -20,9 +20,10 @@ void	init_forks(t_meta *meta)
 	while (i < meta->n_philos)
 	{
 		if (pthread_mutex_init(&meta->forks[i], NULL) != 0)
-			exit_error(ERR_MUTEX, NULL, 3, meta);
+			return (exit_error(ERR_MUTEX, NULL, 3, meta));
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 void	init_philos(t_meta *meta)
@@ -33,9 +34,9 @@ void	init_philos(t_meta *meta)
 	while (i < meta->n_philos)
 	{
 		meta->philos[i].id = i;
-		meta->philos[i].state = 0;
+		meta->philos[i].last_ate = get_time(meta);
 		meta->philos[i].l_fork[0] = i;
-		meta->philos[i].r_fork[0] = i % (meta->n_philos - 1);
+		meta->philos[i].r_fork[0] = (i +  1) % meta->n_philos;
 		meta->philos[i].l_fork[1] = 1;
 		meta->philos[i].r_fork[1] = 1;
 		meta->philos[i].meta = meta;
@@ -59,7 +60,12 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	meta->forks = ft_calloc((meta->n_philos + 1), sizeof(pthread_mutex_t));
 	if (!meta->philos || !meta->forks)
 		return (exit_error(ERR_MEM, NULL, 2, meta));
-	init_forks(meta);
+	if (init_forks(meta))
+		return (EXIT_FAILURE);
 	init_philos(meta);
+	// if (pthread_mutex_init(&meta->time_mutex, NULL) != 0)
+	// 		return (exit_error(ERR_MUTEX, NULL, 3, meta));
+	// if (pthread_mutex_init(&meta->print_mutex, NULL) != 0)
+	// 		return (exit_error(ERR_MUTEX, NULL, 3, meta));
 	return (EXIT_SUCCESS);
 }

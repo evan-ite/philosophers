@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/12 17:25:08 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:49:57 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]"
 
 // Structures
 typedef struct s_philo {
-	pthread_t	thread_id;
-	int		id;
-	// int		state;
-	int		l_fork[2];
-	int		r_fork[2];
+	pthread_t		thread_id;
+	int				id;
+	long long		last_ate;
+	int				l_fork[2];
+	int				r_fork[2];
 	struct s_meta	*meta;
 }	t_philo;
 
@@ -46,6 +46,8 @@ typedef struct s_meta {
 	int				all_alive;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	time_mutex;
+	pthread_mutex_t	print_mutex;
 }	t_meta;
 
 // Fuctions
@@ -54,6 +56,8 @@ int	run(t_meta *meta);
 
 // Utils
 int		exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
+long long	get_time(t_meta *meta);
+void	print_lock(t_philo *philo, char *state);
 
 // Libft
 void	*ft_calloc(size_t nmemb, size_t bytesize);
