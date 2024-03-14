@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisevaniterson <elisevaniterson@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/13 18:01:52 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/14 09:54:00 by elisevanite      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	check_death(t_philo *philo)
 {
 	if ((get_time(philo->meta, 0) - philo->last_ate) >= philo->meta->t_die)
 	{
-		philo->meta->all_alive = 0;
 		print_lock(philo, "dead");
+		philo->meta->all_alive = 0;
 		return (1);
 	}
 	return (0);

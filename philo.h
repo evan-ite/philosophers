@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elisevaniterson <elisevaniterson@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/13 14:33:15 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/14 09:53:12 by elisevanite      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	run(t_meta *meta);
 int		exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
 long long	get_time(t_meta *, int start);
 void	print_lock(t_philo *philo, char *state);
+void	free_meta(t_meta *meta);
 
 // Libft
 void	*ft_calloc(size_t nmemb, size_t bytesize);
