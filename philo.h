@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisevaniterson <elisevaniterson@studen    +#+  +:+       +#+        */
+/*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/14 09:53:12 by elisevanite      ###   ########.fr       */
+/*   Updated: 2024/03/18 12:53:27 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef struct s_meta {
 // Fuctions
 int	init_meta(int argc, char **argv, t_meta *meta);
 int	run(t_meta *meta);
+
+// Philo utils
+int	sleeping(t_philo *philo);
+int	eat(t_philo *philo);
+int	think(t_philo *philo);
+int	check_death(t_philo *philo);
 
 // Utils
 int		exit_error(char *err_msg, char *src, int err_code, t_meta *meta);

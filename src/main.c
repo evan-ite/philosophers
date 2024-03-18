@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisevaniterson <elisevaniterson@studen    +#+  +:+       +#+        */
+/*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:19:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/14 09:53:50 by elisevanite      ###   ########.fr       */
+/*   Updated: 2024/03/18 12:45:11 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int	main(int argc, char **argv)
 		return (exit_error("", NULL, 1, meta));
 	if (run(meta))
 		return (exit_error("", NULL, 1, meta));
-	free_meta(meta);
+	// free_meta(meta);
 	return (EXIT_SUCCESS);
 }
