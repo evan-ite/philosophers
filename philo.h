@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 12:53:27 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:04:48 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]"
 # define ERR_MUTEX "Mutex error"
 # define ERR_THD "Thread error"
 
-// Structures
 typedef struct s_philo {
 	pthread_t		thread_id;
 	int				id;
 	long long		last_ate;
+	int				times_ate;
 	int				l_fork[2];
 	int				r_fork[2];
 	struct s_meta	*meta;
@@ -48,7 +48,9 @@ typedef struct s_meta {
 	long long		start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	int				*fork_flag;
 	pthread_mutex_t	print_mutex;
+	int				print_flag;
 }	t_meta;
 
 // Fuctions
@@ -59,13 +61,15 @@ int	run(t_meta *meta);
 int	sleeping(t_philo *philo);
 int	eat(t_philo *philo);
 int	think(t_philo *philo);
-int	check_death(t_philo *philo);
 
 // Utils
-int		exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
+int			check_death(t_philo *philo);
+int			check_all_ate(t_meta *meta);
+int			exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
+int			check_input(int argc, char **argv);
 long long	get_time(t_meta *, int start);
-void	print_lock(t_philo *philo, char *state);
-void	free_meta(t_meta *meta);
+void		print_lock(t_philo *philo, char *state);
+void		free_meta(t_meta *meta);
 
 // Libft
 void	*ft_calloc(size_t nmemb, size_t bytesize);

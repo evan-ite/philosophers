@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elisevaniterson <elisevaniterson@studen    +#+  +:+       +#+        */
+/*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/14 09:34:46 by elisevanite      ###   ########.fr       */
+/*   Updated: 2024/03/18 14:41:17 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,39 @@ long long	get_time(t_meta *meta, int start)
 	return (time_ms);
 }
 
+int	check_death(t_philo *philo)
+{
+	if ((get_time(philo->meta, 0) - philo->last_ate) >= philo->meta->t_die)
+	{
+		print_lock(philo, "is dead");
+		philo->meta->all_alive = 0;
+		return (1);
+	}
+	return (0);
+}
+
+int	check_all_ate(t_meta *meta)
+{
+	int	i;
+
+	if (meta->n_must_eat < 0)
+		return (0);
+	i = 0;
+	while (i < meta->n_philos)
+	{
+		if (meta->philos[i].times_ate < meta->n_must_eat)
+			return (0);
+		i++;
+	}
+	meta->all_alive = 0;
+	return (1);
+}
+
 void	print_lock(t_philo *philo, char *state)
 {
 	if (!philo->meta->all_alive)
 		return ;
 	pthread_mutex_lock(&philo->meta->print_mutex);
-	printf("%lld %i is %s\n", get_time(philo->meta, 0), philo->id, state);
+	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id, state);
 	pthread_mutex_unlock(&philo->meta->print_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:26:27 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 12:44:42 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:32:44 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,27 @@ void	free_meta(t_meta *meta)
 {
 	int	i;
 
-	// if (&meta->print_mutex)
-	// 	pthread_mutex_destroy(&meta->print_mutex);
-	if (meta->forks)
+	if (meta->print_flag == 1)
+		pthread_mutex_destroy(&meta->print_mutex);
+	if (meta->fork_flag)
 	{
 		i = 0;
-		while (&meta->forks[i])
+		while (meta->fork_flag[i])
 			pthread_mutex_destroy(&meta->forks[i++]);
+		free(meta->fork_flag);
 	}
 	if (meta->philos)
 	{
 		i = 0;
 		while (meta->philos[i].thread_id)
 			pthread_detach(meta->philos[i++].thread_id);
-		free(meta->philos);
 	}
 	if (meta->monitor_id)
 		pthread_detach(meta->monitor_id);
-	free(meta);
+	if (meta->forks)
+		free(meta->forks);
+	if (meta->philos)
+		free(meta->philos);
 }
 
 int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
@@ -54,7 +57,31 @@ int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
 	else
 		ft_putendl_fd(err_msg, 2);
 	if (meta)
+	{
+		free_meta(meta);
 		free(meta);
-		// free_meta(meta);
+	}
 	return(err_code);
+}
+
+int	check_input(int argc, char **argv)
+{
+	int	i;
+	int	j;
+
+	if (argc < 5 || argc > 6)
+		return (0);
+	i = 1;
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 12:52:25 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:15:46 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ void	*monitor(void *void_meta)
 
 	meta = (t_meta *)void_meta;
 	i = 0;
-	while (meta->all_alive == 1)
+	while (meta->all_alive)
 	{
 		if (check_death(&meta->philos[i]))
+			return (NULL);
+		else if (check_all_ate(meta))
 			return (NULL);
 		i++;
 		i = i % meta->n_philos;
@@ -72,5 +74,7 @@ int	run(t_meta *meta)
 			return (exit_error(ERR_THD, NULL, 3, meta));
 		i++;
 	}
+	if (pthread_join(meta->monitor_id, NULL) != 0)
+			return (exit_error(ERR_THD, NULL, 3, meta));
 	return (EXIT_SUCCESS);
 }
