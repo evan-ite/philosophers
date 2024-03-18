@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 15:04:48 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:35:51 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_philo {
 
 typedef struct s_meta {
 	pthread_t		monitor_id;
+	int				monitor_flag;
 	int				n_philos;
 	int				t_die;
 	int				t_eat;
@@ -47,6 +48,7 @@ typedef struct s_meta {
 	int				all_alive;
 	long long		start_time;
 	t_philo			*philos;
+	int				*philos_flag;
 	pthread_mutex_t	*forks;
 	int				*fork_flag;
 	pthread_mutex_t	print_mutex;

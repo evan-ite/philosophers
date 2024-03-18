@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:26:27 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 15:32:44 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:38:07 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void	free_meta(t_meta *meta)
 			pthread_mutex_destroy(&meta->forks[i++]);
 		free(meta->fork_flag);
 	}
-	if (meta->philos)
+	if (meta->philos_flag)
 	{
 		i = 0;
-		while (meta->philos[i].thread_id)
+		while (meta->philos_flag[i])
 			pthread_detach(meta->philos[i++].thread_id);
+		free(meta->philos_flag);
 	}
-	if (meta->monitor_id)
+	if (meta->monitor_flag)
 		pthread_detach(meta->monitor_id);
 	if (meta->forks)
 		free(meta->forks);

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 14:41:17 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:48:04 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ long long	get_time(t_meta *meta, int start)
 
 int	check_death(t_philo *philo)
 {
-	if ((get_time(philo->meta, 0) - philo->last_ate) >= philo->meta->t_die)
+	if ((get_time(philo->meta, 0) - philo->last_ate) > philo->meta->t_die)
 	{
 		print_lock(philo, "is dead");
 		philo->meta->all_alive = 0;
