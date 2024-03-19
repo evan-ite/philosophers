@@ -6,21 +6,20 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 17:35:51 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:18:19 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <time.h>
-#include <sys/time.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <time.h>
+# include <sys/time.h>
 
-// Error messages
 # define ERR_INPUT "./philo number_of_philosophers time_to_die time_to_eat \
 time_to_sleep [number_of_times_each_philosopher_must_eat]"
 # define ERR_MEM "Error allocating memory"
@@ -55,28 +54,27 @@ typedef struct s_meta {
 	int				print_flag;
 }	t_meta;
 
-// Fuctions
-int	init_meta(int argc, char **argv, t_meta *meta);
-int	run(t_meta *meta);
+int			init_meta(int argc, char **argv, t_meta *meta);
+int			run(t_meta *meta);
+int			sleeping(t_philo *philo);
+int			eat(t_philo *philo);
+int			think(t_philo *philo);
 
-// Philo utils
-int	sleeping(t_philo *philo);
-int	eat(t_philo *philo);
-int	think(t_philo *philo);
-
-// Utils
+// utils
 int			check_death(t_philo *philo);
 int			check_all_ate(t_meta *meta);
 int			exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
 int			check_input(int argc, char **argv);
-long long	get_time(t_meta *, int start);
+long long	get_time(t_meta *meta, int start);
 void		print_lock(t_philo *philo, char *state);
 void		free_meta(t_meta *meta);
 
-// Libft
-void	*ft_calloc(size_t nmemb, size_t bytesize);
-char	*ft_strjoin(const char *s1, const char *s2);
-void	ft_putendl_fd(char *s, int fd);
-int		ft_atoi(const char *s);
+// libft
+void		*ft_calloc(size_t nmemb, size_t bytesize);
+char		*ft_strjoin(const char *s1, const char *s2);
+void		ft_putendl_fd(char *s, int fd);
+int			ft_atoi(const char *s);
+size_t		ft_strlen(const char *s);
+char		*ft_strdup(const char *s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/19 12:27:34 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:15:17 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	init_philos(t_meta *meta)
 
 static int	check_values(t_meta *meta)
 {
-	if (meta->t_die < 60 || meta->t_eat < 60 || meta->t_sleep < 60|| !meta->n_must_eat)
+	if (meta->t_die < 60 || meta->t_eat < 60 || \
+		meta->t_sleep < 60 || !meta->n_must_eat)
 		return (exit_error("Times must be grater than 60ms", NULL, 2, meta));
 	if (meta->n_philos == 1)
 	{
@@ -87,7 +88,7 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 		return (EXIT_FAILURE);
 	init_philos(meta);
 	if (pthread_mutex_init(&meta->print_mutex, NULL) != 0)
-			return (exit_error(ERR_MUTEX, NULL, 3, meta));
+		return (exit_error(ERR_MUTEX, NULL, 3, meta));
 	meta->print_flag = 1;
 	return (EXIT_SUCCESS);
 }
