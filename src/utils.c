@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 17:48:04 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:18:24 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 long long	get_time(t_meta *meta, int start)
 {
 	struct timeval	time;
-	long long	time_ms;
+	long long		time_ms;
 
 	gettimeofday(&time, NULL);
 	time_ms = (time.tv_sec * 1000LL) + (time.tv_usec / 1000LL);
@@ -57,6 +57,6 @@ void	print_lock(t_philo *philo, char *state)
 	if (!philo->meta->all_alive)
 		return ;
 	pthread_mutex_lock(&philo->meta->print_mutex);
-	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id, state);
+	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);
 	pthread_mutex_unlock(&philo->meta->print_mutex);
 }

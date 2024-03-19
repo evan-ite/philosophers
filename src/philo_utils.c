@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 14:44:25 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:08:02 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	eat(t_philo *philo)
 		{
 			philo->last_ate = get_time(philo->meta, 0);
 			print_lock(philo, "is eating");
-			philo->times_ate+= 1;
+			philo->times_ate += 1;
 			usleep(philo->meta->t_eat * 1000);
 			philo->r_fork[1] = 1;
 			philo->l_fork[1] = 1;

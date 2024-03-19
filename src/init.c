@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 17:45:17 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:27:34 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_philos(t_meta *meta)
 		meta->philos[i].last_ate = get_time(meta, 0);
 		meta->philos[i].times_ate = 0;
 		meta->philos[i].l_fork[0] = i;
-		meta->philos[i].r_fork[0] = (i +  1) % meta->n_philos;
+		meta->philos[i].r_fork[0] = (i + 1) % meta->n_philos;
 		meta->philos[i].l_fork[1] = 1;
 		meta->philos[i].r_fork[1] = 1;
 		meta->philos[i].meta = meta;
@@ -56,7 +56,10 @@ static int	check_values(t_meta *meta)
 	if (meta->t_die < 60 || meta->t_eat < 60 || meta->t_sleep < 60|| !meta->n_must_eat)
 		return (exit_error("Times must be grater than 60ms", NULL, 2, meta));
 	if (meta->n_philos == 1)
-		return (exit_error("One solo philo will always die...", NULL, 2, meta));
+	{
+		printf("%lld %i %s\n", get_time(meta, 0), 1, "is dead");
+		return (exit_error(NULL, NULL, 2, meta));
+	}
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 #    By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:07:09 by evan-ite          #+#    #+#              #
-#    Updated: 2024/03/18 12:52:35 by evan-ite         ###   ########.fr        #
+#    Updated: 2024/03/19 12:26:43 by evan-ite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 POSIX = -pthread
 
 SRC = src/main.c src/error.c src/init.c src/philo.c src/libft_utils.c \
-	src/utils.c src/philo_utils.c
+	src/utils.c src/philo_utils.c src/libft_utils2.c
 
 OBJ := $(SRC:.c=.o)
 

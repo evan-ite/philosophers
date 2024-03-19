@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 17:46:23 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:22:32 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,15 @@ void	*monitor(void *void_meta)
 int	run(t_meta *meta)
 {
 	int	i;
+
 	if (pthread_create(&meta->monitor_id, NULL, monitor, meta) != 0)
 		return (exit_error(ERR_THD, NULL, 3, meta));
 	meta->monitor_flag = 1;
 	i = 0;
 	while (i < meta->n_philos)
 	{
-		if (pthread_create(&meta->philos[i].thread_id, NULL, start_philo, &meta->philos[i]) != 0)
+		if (pthread_create(&meta->philos[i].thread_id, NULL, \
+			start_philo, &meta->philos[i]) != 0)
 			return (exit_error(ERR_THD, NULL, 3, meta));
 		i++;
 	}
@@ -76,6 +78,6 @@ int	run(t_meta *meta)
 		i++;
 	}
 	if (pthread_join(meta->monitor_id, NULL) != 0)
-			return (exit_error(ERR_THD, NULL, 3, meta));
+		return (exit_error(ERR_THD, NULL, 3, meta));
 	return (EXIT_SUCCESS);
 }
