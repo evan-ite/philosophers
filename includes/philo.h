@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/19 13:18:19 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:15:00 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_meta {
 	int				*philos_flag;
 	pthread_mutex_t	*forks;
 	int				*fork_flag;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	print;
 	int				print_flag;
 }	t_meta;
 

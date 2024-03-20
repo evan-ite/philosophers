@@ -6,11 +6,11 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:24:59 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/19 12:25:28 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:37:31 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../includes/philo_bonus.h"
 #include <limits.h>
 #include <stdint.h>
 

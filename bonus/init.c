@@ -5,48 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:36:22 by evan-ite         ###   ########.fr       */
+/*   Created: 2024/03/20 10:55:29 by evan-ite          #+#    #+#             */
+/*   Updated: 2024/03/20 11:37:21 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
-int	init_forks(t_meta *meta)
+static void	init_philos(t_meta *meta)
 {
 	int	i;
 
-	meta->fork_flag = (int *)ft_calloc(meta->n_philos + 1, sizeof(int));
-	if (!meta->fork_flag)
-		return (exit_error(ERR_MEM, NULL, 2, meta));
-	i = 0;
-	while (i < meta->n_philos)
-	{
-		if (pthread_mutex_init(&meta->forks[i], NULL) != 0)
-			return (exit_error(ERR_MUTEX, NULL, 3, meta));
-		meta->fork_flag[i] = 1;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-void	init_philos(t_meta *meta)
-{
-	int	i;
-
-	meta->philos_flag = (int *)ft_calloc(meta->n_philos + 1, sizeof(int));
 	i = 0;
 	while (i < meta->n_philos)
 	{
 		meta->philos[i].id = i;
 		meta->philos[i].last_ate = get_time(meta, 0);
 		meta->philos[i].times_ate = 0;
-		meta->philos[i].l_fork[0] = i;
-		meta->philos[i].r_fork[0] = (i + 1) % meta->n_philos;
-		meta->philos[i].l_fork[1] = 1;
-		meta->philos[i].r_fork[1] = 1;
 		meta->philos[i].meta = meta;
-		meta->philos_flag[i] = 1;
 		i++;
 	}
 }
@@ -68,6 +44,7 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 {
 	meta->print_flag = 0;
 	meta->monitor_flag = 0;
+	meta->fork_flag = 0;
 	meta->n_philos = ft_atoi(argv[1]);
 	meta->t_die = ft_atoi(argv[2]);
 	meta->t_eat = ft_atoi(argv[3]);
@@ -79,16 +56,16 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	else
 		meta->n_must_eat = -1;
 	meta->philos = ft_calloc((meta->n_philos + 1), sizeof(t_philo));
-	meta->forks = ft_calloc((meta->n_philos + 1), sizeof(pthread_mutex_t));
-	if (!meta->philos || !meta->forks)
+	if (!meta->philos)
 		return (exit_error(ERR_MEM, NULL, 2, meta));
-	if (check_values(meta))
-		return (EXIT_FAILURE);
-	if (init_forks(meta))
-		return (EXIT_FAILURE);
+	check_values(meta);
+	if (sem_init(&meta->forks, 1, meta->n_philos) != 0)
+		exit_error(ERR_SEM, NULL, 2, meta);
+	meta->fork_flag = 1;
 	init_philos(meta);
-	if (pthread_mutex_init(&meta->print, NULL) != 0)
-		return (exit_error(ERR_MUTEX, NULL, 3, meta));
+	if (sem_init(&meta->print, 1, 1) != 0)
+		exit_error(ERR_SEM, NULL, 3, meta);
 	meta->print_flag = 1;
 	return (EXIT_SUCCESS);
 }
+

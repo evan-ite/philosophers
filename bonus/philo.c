@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 13:26:17 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:34 by evan-ite         ###   ########.fr       */
+/*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
+/*   Updated: 2024/03/20 11:39:05 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-int	main(int argc, char **argv)
+void	run_philo(t_philo *philo)
 {
-	t_meta	*meta;
-
-	check_input(argc, argv);
-	init_meta(argc, argv, &meta);
-	start_simulation(&meta);
-	return (EXIT_SUCCESS);
+	while (philo->meta->all_alive)
+	{
+		if (philo->id % 2 == 0)
+		{
+			sleeping(philo);
+			think(philo);
+			eat(philo);
+		}
+		else
+		{
+			eat(philo);
+			sleeping(philo);
+			think(philo);
+		}
+	}
 }

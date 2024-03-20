@@ -5,79 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/19 12:22:32 by evan-ite         ###   ########.fr       */
+/*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
+/*   Updated: 2024/03/20 11:36:48 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../includes/philo.h"
 
-void	*start_philo(void *void_philo)
+int	sleeping(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)void_philo;
-	while (philo->meta->all_alive)
-	{
-		if (philo->id % 2 == 0)
-		{
-			sleeping(philo);
-			think(philo);
-			eat(philo);
-		}
-		else
-		{
-			eat(philo);
-			sleeping(philo);
-			think(philo);
-		}
-	}
-	return (NULL);
+	print_lock(philo, "is sleeping");
+	usleep(philo->meta->t_sleep * 1000);
+	return (EXIT_SUCCESS);
 }
 
-void	*monitor(void *void_meta)
+static int	grab_forks(t_philo *philo)
 {
-	t_meta	*meta;
-	int		i;
-
-	meta = (t_meta *)void_meta;
-	i = 0;
-	while (meta->all_alive)
+	if (philo->l_fork[1])
 	{
-		if (check_death(&meta->philos[i]))
-			return (NULL);
-		else if (check_all_ate(meta))
-			return (NULL);
-		i++;
-		i = i % meta->n_philos;
+		pthread_mutex_lock(&philo->meta->forks[philo->l_fork[0]]);
+		philo->l_fork[1] = 0;
 	}
-	return (NULL);
+	if (!philo->l_fork[1] && philo->r_fork[1])
+	{
+		pthread_mutex_lock(&philo->meta->forks[philo->r_fork[0]]);
+		philo->r_fork[1] = 0;
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
+		philo->l_fork[1] = 1;
+	}
+	if (!philo->r_fork[1] && !philo->l_fork[1])
+	{
+		print_lock(philo, "has taken a fork");
+		print_lock(philo, "has taken a fork");
+		return (1);
+	}
+	else
+		return (0);
 }
 
-int	run(t_meta *meta)
+int	eat(t_philo *philo)
 {
-	int	i;
+	while (1)
+	{
+		if (grab_forks(philo))
+		{
+			philo->last_ate = get_time(philo->meta, 0);
+			print_lock(philo, "is eating");
+			philo->times_ate += 1;
+			usleep(philo->meta->t_eat * 1000);
+			philo->r_fork[1] = 1;
+			philo->l_fork[1] = 1;
+			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
+			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork[0]]);
+			break ;
+		}
+	}
+	return (EXIT_SUCCESS);
+}
 
-	if (pthread_create(&meta->monitor_id, NULL, monitor, meta) != 0)
-		return (exit_error(ERR_THD, NULL, 3, meta));
-	meta->monitor_flag = 1;
-	i = 0;
-	while (i < meta->n_philos)
-	{
-		if (pthread_create(&meta->philos[i].thread_id, NULL, \
-			start_philo, &meta->philos[i]) != 0)
-			return (exit_error(ERR_THD, NULL, 3, meta));
-		i++;
-	}
-	i = 0;
-	while (i < meta->n_philos)
-	{
-		if (pthread_join(meta->philos[i].thread_id, NULL) != 0)
-			return (exit_error(ERR_THD, NULL, 3, meta));
-		meta->philos_flag[i] = 0;
-		i++;
-	}
-	if (pthread_join(meta->monitor_id, NULL) != 0)
-		return (exit_error(ERR_THD, NULL, 3, meta));
+int	think(t_philo *philo)
+{
+	print_lock(philo, "is thinking");
 	return (EXIT_SUCCESS);
 }

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:01 by evan-ite         ###   ########.fr       */
+/*   Created: 2024/03/20 11:29:56 by evan-ite          #+#    #+#             */
+/*   Updated: 2024/03/20 11:37:43 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 long long	get_time(t_meta *meta, int start)
 {
@@ -56,7 +56,7 @@ void	print_lock(t_philo *philo, char *state)
 {
 	if (!philo->meta->all_alive)
 		return ;
-	pthread_mutex_lock(&philo->meta->print);
+	sem_wait(&philo->meta->print);
 	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);
-	pthread_mutex_unlock(&philo->meta->print);
+	sem_post(&philo->meta->print);
 }

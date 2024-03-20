@@ -6,11 +6,11 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:19:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/18 17:35:56 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:36:42 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../includes/philo.h"
 
 int	main(int argc, char **argv)
 {

@@ -6,18 +6,18 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:26:27 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/19 12:22:50 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:36:12 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "../includes/philo.h"
 
 void	free_meta(t_meta *meta)
 {
 	int	i;
 
 	if (meta->print_flag == 1)
-		pthread_mutex_destroy(&meta->print_mutex);
+		pthread_mutex_destroy(&meta->print);
 	if (meta->fork_flag)
 	{
 		i = 0;
