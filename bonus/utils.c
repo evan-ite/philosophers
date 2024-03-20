@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:29:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:43 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:30:42 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ long long	get_time(t_meta *meta, int start)
 
 int	check_death(t_philo *philo)
 {
+	// printf("MONITOR philo %i UPDATE LAST ATE %lld\n", philo->id + 1, philo->last_ate);
 	if ((get_time(philo->meta, 0) - philo->last_ate) > philo->meta->t_die)
 	{
 		print_lock(philo, "is dead");
@@ -35,20 +36,14 @@ int	check_death(t_philo *philo)
 	return (0);
 }
 
-int	check_all_ate(t_meta *meta)
+int	check_all_ate(t_philo *philo)
 {
-	int	i;
-
-	if (meta->n_must_eat < 0)
+	if (philo->meta->n_must_eat < 0)
 		return (0);
-	i = 0;
-	while (i < meta->n_philos)
-	{
-		if (meta->philos[i].times_ate < meta->n_must_eat)
-			return (0);
-		i++;
-	}
-	meta->all_alive = 0;
+	// printf("MONITOR philo %i UPDATE TIMES ATE %i \n", meta->philos[i].id + 1, meta->philos[i].times_ate);
+	if (philo->times_ate < philo->meta->n_must_eat)
+		return (0);
+	philo->meta->all_alive = 0;
 	return (1);
 }
 

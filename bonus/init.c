@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:55:29 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:21 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:20:13 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	init_philos(t_meta *meta)
 		meta->philos[i].last_ate = get_time(meta, 0);
 		meta->philos[i].times_ate = 0;
 		meta->philos[i].meta = meta;
+		meta->philos[i].monitor_flag = 0;
 		i++;
 	}
 }
@@ -43,7 +44,6 @@ static int	check_values(t_meta *meta)
 int	init_meta(int argc, char **argv, t_meta *meta)
 {
 	meta->print_flag = 0;
-	meta->monitor_flag = 0;
 	meta->fork_flag = 0;
 	meta->n_philos = ft_atoi(argv[1]);
 	meta->t_die = ft_atoi(argv[2]);

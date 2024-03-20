@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:26:17 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:34 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:35:17 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_meta	*meta;
+	t_meta	meta;
 
 	check_input(argc, argv);
 	init_meta(argc, argv, &meta);
