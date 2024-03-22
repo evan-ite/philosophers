@@ -6,7 +6,7 @@
 #    By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:07:09 by evan-ite          #+#    #+#              #
-#    Updated: 2024/03/20 11:35:29 by evan-ite         ###   ########.fr        #
+#    Updated: 2024/03/22 12:33:55 by evan-ite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ POSIX = -pthread
 SRC = src/main.c src/error.c src/init.c src/philo.c src/libft_utils.c \
 	src/utils.c src/threads.c src/libft_utils2.c
 BNS = bonus/main.c bonus/error.c bonus/libft_utils.c bonus/libft_utils2.c \
-	bonus/init.c bonus/philo.c bonus/processes.c bonus/utils.c
+	bonus/init.c bonus/philo.c bonus/parent.c bonus/utils.c bonus/children.c
 
 OBJ := $(SRC:.c=.o)
 BOBJ := $(BNS:.c=.o)

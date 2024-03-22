@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:29:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 14:36:05 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:59:24 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
 	}
 	else if (err_msg)
 		ft_putendl_fd(err_msg, 2);
-	free(meta);
+	if (meta)
+		free(meta);
 	exit(err_code);
 }
 

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:27:07 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 15:30:31 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:06:53 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <time.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <semaphore.h>
 # include <signal.h>
 
@@ -64,6 +65,8 @@ int	check_all_ate(t_philo *philo);
 void	print_lock(t_philo *philo, char *state);
 void	start_simulation(t_meta *meta);
 void	run_philo(t_philo *philo);
+void	child_process(t_philo *philo);
+void	kill_children(t_meta *meta);
 
 
 // libft
