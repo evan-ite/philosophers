@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 12:32:23 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/22 13:24:48 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:25:37 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,4 @@ void	child_process(t_philo *philo)
 			exit_error(ERR_THD, NULL, 3, philo->meta);
 		exit(EXIT_SUCCESS);
 	}
-	else
-		
 }
