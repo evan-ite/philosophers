@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:29:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 15:30:42 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:49:13 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	check_all_ate(t_philo *philo)
 
 void	print_lock(t_philo *philo, char *state)
 {
-	if (!philo->meta->all_alive)
-		return ;
-	sem_wait(&philo->meta->print);
+	sem_wait(philo->meta->all_alive);
+	sem_wait(philo->meta->print);
 	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);
-	sem_post(&philo->meta->print);
+	sem_post(philo->meta->print);
+	sem_post(philo->meta->all_alive);
 }

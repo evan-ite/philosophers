@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:55:29 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 15:20:13 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:49:05 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static int	check_values(t_meta *meta)
 
 int	init_meta(int argc, char **argv, t_meta *meta)
 {
-	meta->print_flag = 0;
-	meta->fork_flag = 0;
 	meta->n_philos = ft_atoi(argv[1]);
 	meta->t_die = ft_atoi(argv[2]);
 	meta->t_eat = ft_atoi(argv[3]);
 	meta->t_sleep = ft_atoi(argv[4]);
 	meta->start_time = get_time(meta, 1);
-	meta->all_alive = 1;
+	meta->all_alive = sem_open("/all_alive", O_CREAT, 0666, 1);
+	if (meta->all_alive == SEM_FAILED)
+		exit_error(ERR_SEM, NULL, -1, meta);
 	if (argc == 6)
 		meta->n_must_eat = ft_atoi(argv[5]);
 	else
@@ -59,13 +59,13 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	if (!meta->philos)
 		return (exit_error(ERR_MEM, NULL, 2, meta));
 	check_values(meta);
-	if (sem_init(&meta->forks, 1, meta->n_philos) != 0)
-		exit_error(ERR_SEM, NULL, 2, meta);
-	meta->fork_flag = 1;
+	meta->forks = sem_open("/forks", O_CREAT, 0666, meta->n_philos);
+	if (meta->forks == SEM_FAILED)
+		exit_error(ERR_SEM, NULL, -1, meta);
 	init_philos(meta);
-	if (sem_init(&meta->print, 1, 1) != 0)
-		exit_error(ERR_SEM, NULL, 3, meta);
-	meta->print_flag = 1;
+	meta->print = sem_open("/print", O_CREAT, 0666, 1);
+	if (meta->print == SEM_FAILED)
+		exit_error(ERR_SEM, NULL, -1, meta);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:27:07 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/22 13:06:53 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:48:13 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <semaphore.h>
 # include <signal.h>
+# include <fcntl.h>
 
 # define ERR_INPUT "./philo number_of_philosophers time_to_die time_to_eat \
 time_to_sleep [number_of_times_each_philosopher_must_eat]"
@@ -46,13 +47,11 @@ typedef struct s_meta {
 	int				t_eat;
 	int				t_sleep;
 	int				n_must_eat;
-	int				all_alive;
 	long long		start_time;
 	t_philo			*philos;
-	sem_t			forks;
-	int				fork_flag;
-	sem_t			print;
-	int				print_flag;
+	sem_t			*all_alive;
+	sem_t			*forks;
+	sem_t			*print;
 }	t_meta;
 
 // simulation
@@ -66,7 +65,8 @@ void	print_lock(t_philo *philo, char *state);
 void	start_simulation(t_meta *meta);
 void	run_philo(t_philo *philo);
 void	child_process(t_philo *philo);
-void	kill_children(t_meta *meta);
+void	free_meta(t_meta *meta);
+int	check_alive(t_meta *meta);
 
 
 // libft

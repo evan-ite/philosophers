@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 15:48:17 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:48:04 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,18 @@ static int	sleeping(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
-static int	think(t_philo *philo)
-{
-	print_lock(philo, "is thinking");
-	return (EXIT_SUCCESS);
-}
-
 static int	grab_forks(t_philo *philo)
 {
-	sem_wait(&philo->meta->forks);
+	sem_wait(philo->meta->forks);
 	print_lock(philo, "has taken a fork");
-	sem_wait(&philo->meta->forks);
+	sem_wait(philo->meta->forks);
 	print_lock(philo, "has taken a fork");
-	sem_post(&philo->meta->forks);
-	sem_post(&philo->meta->forks);
+	sem_post(philo->meta->forks);
+	sem_post(philo->meta->forks);
 	return (1);
 }
 
-int	eat(t_philo *philo)
+static int	eat(t_philo *philo)
 {
 	if (grab_forks(philo))
 	{
@@ -50,21 +44,28 @@ int	eat(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
+int	check_alive(t_meta *meta)
+{
+	sem_wait(meta->all_alive);
+	sem_post(meta->all_alive);
+	return (1);
+}
+
 void	run_philo(t_philo *philo)
 {
-	while (philo->meta->all_alive)
+	while (check_alive(philo->meta))
 	{
 		if (philo->id % 2 == 0)
 		{
 			sleeping(philo);
-			think(philo);
+			print_lock(philo, "is thinking");
 			eat(philo);
 		}
 		else
 		{
 			eat(philo);
 			sleeping(philo);
-			think(philo);
+			print_lock(philo, "is thinking");
 		}
 	}
 }
