@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 12:24:59 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:31 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:33:02 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_calloc(size_t nmemb, size_t bytesize)
 	unsigned char	*ptr;
 
 	if (nmemb == 0 || bytesize == 0)
-		return (ft_strdup(NULL));
+		return ((void *) NULL);
 	if (nmemb > SIZE_MAX / bytesize || nmemb > INT_MAX / bytesize)
 		return (NULL);
 	array = malloc(nmemb * bytesize);

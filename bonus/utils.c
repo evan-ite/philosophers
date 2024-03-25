@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:29:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 13:49:13 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:54:18 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,27 @@ long long	get_time(t_meta *meta, int start)
 
 int	check_death(t_philo *philo)
 {
-	// printf("MONITOR philo %i UPDATE LAST ATE %lld\n", philo->id + 1, philo->last_ate);
 	if ((get_time(philo->meta, 0) - philo->last_ate) > philo->meta->t_die)
 	{
 		print_lock(philo, "is dead");
-		philo->meta->all_alive = 0;
+		sem_wait(philo->meta->print);
 		return (1);
 	}
 	return (0);
 }
 
-int	check_all_ate(t_philo *philo)
+int	check_times_ate(t_philo *philo)
 {
 	if (philo->meta->n_must_eat < 0)
 		return (0);
-	// printf("MONITOR philo %i UPDATE TIMES ATE %i \n", meta->philos[i].id + 1, meta->philos[i].times_ate);
 	if (philo->times_ate < philo->meta->n_must_eat)
 		return (0);
-	philo->meta->all_alive = 0;
 	return (1);
 }
 
 void	print_lock(t_philo *philo, char *state)
 {
-	sem_wait(philo->meta->all_alive);
 	sem_wait(philo->meta->print);
 	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);
 	sem_post(philo->meta->print);
-	sem_post(philo->meta->all_alive);
 }
