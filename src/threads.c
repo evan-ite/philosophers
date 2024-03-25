@@ -6,18 +6,30 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:36:55 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:11:10 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*start_philo(void *void_philo)
+static int	check_alive(t_meta *meta)
+{
+	pthread_mutex_lock(&meta->alive);
+	if (meta->all_alive == 1)
+	{
+		pthread_mutex_unlock(&meta->alive);
+		return (1);
+	}
+	pthread_mutex_unlock(&meta->alive);
+	return (0);
+}
+
+static void	*start_philo(void *void_philo)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)void_philo;
-	while (philo->meta->all_alive)
+	while (check_alive(philo->meta))
 	{
 		if (philo->id % 2 == 0)
 		{
@@ -35,7 +47,7 @@ void	*start_philo(void *void_philo)
 	return (NULL);
 }
 
-void	*monitor(void *void_meta)
+static void	*monitor(void *void_meta)
 {
 	t_meta	*meta;
 	int		i;
@@ -75,6 +87,7 @@ int	run(t_meta *meta)
 		if (pthread_join(meta->philos[i].thread_id, NULL) != 0)
 			return (exit_error(ERR_THD, NULL, 3, meta));
 		meta->philos_flag[i] = 0;
+		usleep(1);
 		i++;
 	}
 	if (pthread_join(meta->monitor_id, NULL) != 0)

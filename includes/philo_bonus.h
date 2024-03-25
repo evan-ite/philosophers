@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:27:07 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 17:25:53 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:16:51 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,18 @@ typedef struct s_meta {
 }	t_meta;
 
 // simulation
-int	init_meta(int argc, char **argv, t_meta *meta);
-int	check_input(int argc, char **argv);
-int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
-long long	get_time(t_meta *meta, int start);
-int	check_death(t_philo *philo);
-int	check_times_ate(t_philo *philo);
-void	print_lock(t_philo *philo, char *state);
-void	start_simulation(t_meta *meta);
-void	run_philo(t_philo *philo);
-void	child_process(t_philo *philo);
-void	free_meta(t_meta *meta);
+void		start_simulation(t_meta *meta);
+void		run_philo(t_philo *philo);
 
+// utils
+int			init_meta(int argc, char **argv, t_meta *meta);
+int			check_input(int argc, char **argv);
+long long	get_time(t_meta *meta, int start);
+int			check_death(t_philo *philo);
+int			check_times_ate(t_philo *philo);
+void		print_lock(t_philo *philo, char *state);
+int			exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
+void		free_meta(t_meta *meta);
 
 // libft
 void		*ft_calloc(size_t nmemb, size_t bytesize);

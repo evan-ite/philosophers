@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:55:29 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 17:22:49 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:14:45 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_values(t_meta *meta)
 	return (EXIT_SUCCESS);
 }
 
-void	init_sems(int argc, char **argv, t_meta *meta)
+static void	init_sems(int argc, char **argv, t_meta *meta)
 {
 	sem_unlink("/stop");
 	sem_unlink("/forks");

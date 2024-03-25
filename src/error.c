@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:26:27 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:36:12 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:59:27 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	free_meta(t_meta *meta)
 {
 	int	i;
 
+	pthread_mutex_destroy(&meta->alive);
 	if (meta->print_flag == 1)
 		pthread_mutex_destroy(&meta->print);
 	if (meta->fork_flag)

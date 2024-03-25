@@ -6,13 +6,13 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:29:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 17:19:59 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:14:34 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-void	close_semaphores(t_meta *meta)
+static void	close_semaphores(t_meta *meta)
 {
 	if (meta->forks != SEM_FAILED)
 	{

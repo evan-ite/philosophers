@@ -6,13 +6,13 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:36:22 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:09:02 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	init_forks(t_meta *meta)
+static int	init_forks(t_meta *meta)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ int	init_forks(t_meta *meta)
 	return (EXIT_SUCCESS);
 }
 
-void	init_philos(t_meta *meta)
+static void	init_philos(t_meta *meta)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ static int	check_values(t_meta *meta)
 	return (EXIT_SUCCESS);
 }
 
-int	init_meta(int argc, char **argv, t_meta *meta)
+static void	init_base(char **argv, t_meta *meta)
 {
 	meta->print_flag = 0;
 	meta->monitor_flag = 0;
@@ -74,6 +74,11 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	meta->t_sleep = ft_atoi(argv[4]);
 	meta->start_time = get_time(meta, 1);
 	meta->all_alive = 1;
+}
+
+int	init_meta(int argc, char **argv, t_meta *meta)
+{
+	init_base(argv, meta);
 	if (argc == 6)
 		meta->n_must_eat = ft_atoi(argv[5]);
 	else
@@ -90,5 +95,7 @@ int	init_meta(int argc, char **argv, t_meta *meta)
 	if (pthread_mutex_init(&meta->print, NULL) != 0)
 		return (exit_error(ERR_MUTEX, NULL, 3, meta));
 	meta->print_flag = 1;
+	if (pthread_mutex_init(&meta->alive, NULL) != 0)
+		return (exit_error(ERR_MUTEX, NULL, 3, meta));
 	return (EXIT_SUCCESS);
 }

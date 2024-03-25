@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:33:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:36:27 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:09:59 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-int	ft_isspace(char c)
+static int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\f' || c == '\n')
 		return (1);

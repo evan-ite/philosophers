@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:15:00 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:58:49 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_meta {
 	int				t_sleep;
 	int				n_must_eat;
 	int				all_alive;
+	pthread_mutex_t	alive;
 	long long		start_time;
 	t_philo			*philos;
 	int				*philos_flag;

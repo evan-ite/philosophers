@@ -6,13 +6,13 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:26:17 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 17:08:51 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:15:16 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-void	kill_children(t_meta *meta)
+static void	kill_children(t_meta *meta)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	kill_children(t_meta *meta)
 	}
 }
 
-void	wait_semaphores(int argc, t_meta *meta)
+static void	wait_semaphores(int argc, t_meta *meta)
 {
 	int	i;
 

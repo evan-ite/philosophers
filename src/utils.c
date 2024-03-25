@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/20 11:37:01 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:59:41 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	check_death(t_philo *philo)
 	if ((get_time(philo->meta, 0) - philo->last_ate) > philo->meta->t_die)
 	{
 		print_lock(philo, "is dead");
+		pthread_mutex_lock(&philo->meta->alive);
 		philo->meta->all_alive = 0;
+		pthread_mutex_unlock(&philo->meta->alive);
 		return (1);
 	}
 	return (0);
