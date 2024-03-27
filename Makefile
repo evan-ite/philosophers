@@ -6,7 +6,7 @@
 #    By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:07:09 by evan-ite          #+#    #+#              #
-#    Updated: 2024/03/25 18:12:26 by evan-ite         ###   ########.fr        #
+#    Updated: 2024/03/27 17:29:39 by evan-ite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME_BNS = philo_bonus
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-POSIX = -pthread ##-fsanitize=thread
+POSIX = -pthread
 
 SRC = src/main.c src/error.c src/init.c src/philo.c src/libft_utils.c \
 	src/utils.c src/threads.c src/libft_utils2.c
