@@ -1,7 +1,7 @@
 ## Philosophers 42 Project
 
 
-In this project, we are simulating a scenario where philosophers sit around a round table, alternately eating, thinking, or sleeping. The simulation continues until a philosopher dies of starvation. The project explores the use of threads and mutexes.
+In this project, we are simulating a scenario where philosophers sit around a round table, alternately eating, thinking, or sleeping. The simulation continues until a philosopher dies of starvation. The project explores the use of threads, mutexes, child processes and semaphores.
 
 ---
 
