@@ -6,11 +6,11 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 18:11:10 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:57:21 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../philo.h"
 
 static int	check_alive(t_meta *meta)
 {
@@ -76,6 +76,7 @@ int	run(t_meta *meta)
 	i = 0;
 	while (i < meta->n_philos)
 	{
+		printf("TEST CREATE %i\n", i);
 		if (pthread_create(&meta->philos[i].thread_id, NULL, \
 			start_philo, &meta->philos[i]) != 0)
 			return (exit_error(ERR_THD, NULL, 3, meta));
@@ -84,12 +85,15 @@ int	run(t_meta *meta)
 	i = 0;
 	while (i < meta->n_philos)
 	{
+		printf("TEST JOIN %i\n", i);
 		if (pthread_join(meta->philos[i].thread_id, NULL) != 0)
 			return (exit_error(ERR_THD, NULL, 3, meta));
+		printf("HELP\n");
 		meta->philos_flag[i] = 0;
 		usleep(1);
 		i++;
 	}
+	printf("FINAL TEST %i\n", i);
 	if (pthread_join(meta->monitor_id, NULL) != 0)
 		return (exit_error(ERR_THD, NULL, 3, meta));
 	return (EXIT_SUCCESS);

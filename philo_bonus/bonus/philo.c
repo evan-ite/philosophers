@@ -6,11 +6,11 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 17:28:09 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:40:15 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo_bonus.h"
+#include "../philo_bonus.h"
 
 static int	sleeping(t_philo *philo)
 {

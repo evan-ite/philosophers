@@ -6,11 +6,11 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:33:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 18:09:59 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:40:06 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../philo_bonus.h"
 #include <limits.h>
 #include <stdint.h>
 
@@ -34,26 +34,6 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		size;
-	int		i;
-	char	*dup;
-
-	size = ft_strlen(s);
-	dup = (char *)malloc(size * sizeof(char) + 1);
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
 }
 
 static int	ft_isspace(char c)

@@ -6,11 +6,11 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:29:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 18:14:34 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:39:58 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo_bonus.h"
+#include "../philo_bonus.h"
 
 static void	close_semaphores(t_meta *meta)
 {

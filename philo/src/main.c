@@ -5,52 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 13:26:17 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 18:15:16 by evan-ite         ###   ########.fr       */
+/*   Created: 2024/03/12 12:19:56 by evan-ite          #+#    #+#             */
+/*   Updated: 2024/03/29 17:39:38 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo_bonus.h"
-
-static void	kill_children(t_meta *meta)
-{
-	int	i;
-
-	i = 0;
-	while (i < meta->n_philos)
-	{
-		kill(meta->philos[i].pid, SIGKILL);
-		i++;
-	}
-}
-
-static void	wait_semaphores(int argc, t_meta *meta)
-{
-	int	i;
-
-	sem_wait(meta->stop);
-	if (argc == 6)
-	{
-		i = 0;
-		while (++i < meta->n_philos)
-			sem_wait(meta->stop);
-	}
-}
+#include "../philo.h"
 
 int	main(int argc, char **argv)
 {
 	t_meta	*meta;
 
+	if (!check_input(argc, argv))
+		return (exit_error(ERR_INPUT, NULL, 1, NULL));
 	meta = ft_calloc(1, sizeof(t_meta));
 	if (!meta)
-		exit_error(ERR_CHILD, NULL, -1, NULL);
-	if (!check_input(argc, argv))
-		exit_error(ERR_INPUT, NULL, 1, NULL);
-	init_meta(argc, argv, meta);
-	wait_semaphores(argc, meta);
-	start_simulation(meta);
-	wait_semaphores(argc, meta);
-	kill_children(meta);
+		return (exit_error(ERR_MEM, NULL, 2, meta));
+	if (init_meta(argc, argv, meta))
+		return (EXIT_FAILURE);
+	if (run(meta))
+		return (EXIT_FAILURE);
 	free_meta(meta);
+	if (meta)
+		free(meta);
 	return (EXIT_SUCCESS);
 }
