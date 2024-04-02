@@ -6,7 +6,7 @@
 #    By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:07:09 by evan-ite          #+#    #+#              #
-#    Updated: 2024/03/29 17:35:50 by evan-ite         ###   ########.fr        #
+#    Updated: 2024/04/02 17:36:15 by evan-ite         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-POSIX = -pthread
+POSIX = -pthread -fsanitize=thread -lpthread
 
 SRC = src/main.c src/error.c src/init.c src/philo.c src/libft_utils.c \
 	src/utils.c src/threads.c src/libft_utils2.c

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:40:15 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:55:02 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static int	grab_forks(t_philo *philo)
 	print_lock(philo, "has taken a fork");
 	sem_wait(philo->meta->forks);
 	print_lock(philo, "has taken a fork");
-	sem_post(philo->meta->forks);
-	sem_post(philo->meta->forks);
 	return (1);
 }
 
@@ -38,6 +36,8 @@ static int	eat(t_philo *philo)
 		print_lock(philo, "is eating");
 		philo->times_ate += 1;
 		usleep(philo->meta->t_eat * 1000);
+		sem_post(philo->meta->forks);
+		sem_post(philo->meta->forks);
 	}
 	return (EXIT_SUCCESS);
 }

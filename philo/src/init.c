@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:39:14 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:11:15 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ static void	init_philos(t_meta *meta)
 		meta->philos[i].id = i;
 		meta->philos[i].last_ate = get_time(meta, 0);
 		meta->philos[i].times_ate = 0;
-		meta->philos[i].l_fork[0] = i;
-		meta->philos[i].r_fork[0] = (i + 1) % meta->n_philos;
-		meta->philos[i].l_fork[1] = 1;
-		meta->philos[i].r_fork[1] = 1;
+		meta->philos[i].l_fork = i;
+		meta->philos[i].r_fork = (i + 1) % meta->n_philos;
 		meta->philos[i].meta = meta;
 		meta->philos_flag[i] = 1;
 		i++;
@@ -58,11 +56,6 @@ static int	check_values(t_meta *meta)
 		return (exit_error("Times must be grater than 60ms", NULL, 2, meta));
 	if (!meta->n_must_eat)
 		return (exit_error("Must eat must be greater than 0", NULL, 2, meta));
-	// if (meta->n_philos == 1)
-	// {
-	// 	printf("%lld %i %s\n", get_time(meta, 0), 1, "is dead");
-	// 	return (exit_error(NULL, NULL, 2, meta));
-	// }
 	return (EXIT_SUCCESS);
 }
 

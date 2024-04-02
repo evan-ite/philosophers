@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:29:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:39:58 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:07:55 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
 		ft_putendl_fd(err_msg, 2);
 	if (meta)
 		free_meta(meta);
-	exit(err_code);
+	err_code++;
+	exit(EXIT_FAILURE);
 }
 
 int	check_input(int argc, char **argv)

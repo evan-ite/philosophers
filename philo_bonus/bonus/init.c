@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:55:29 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:40:02 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:04:18 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	check_values(t_meta *meta)
 	if (meta->n_philos == 1)
 	{
 		printf("%lld %i %s\n", get_time(meta, 0), 1, "is dead");
-		return (exit_error(NULL, NULL, 2, meta));
+		return (exit_error(NULL, NULL, 1, meta));
 	}
 	return (EXIT_SUCCESS);
 }

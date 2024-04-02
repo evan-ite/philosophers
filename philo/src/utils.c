@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:39:48 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:02:14 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_all_ate(t_meta *meta)
 
 void	print_lock(t_philo *philo, char *state)
 {
-	if (!philo->meta->all_alive)
+	if (!check_alive(philo->meta))
 		return ;
 	pthread_mutex_lock(&philo->meta->print);
 	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);

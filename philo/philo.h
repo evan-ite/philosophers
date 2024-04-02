@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/25 17:58:49 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:11:05 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_philo {
 	int				id;
 	long long		last_ate;
 	int				times_ate;
-	int				l_fork[2];
-	int				r_fork[2];
+	int				l_fork;
+	int				r_fork;
 	struct s_meta	*meta;
 }	t_philo;
 
@@ -64,6 +64,7 @@ int			think(t_philo *philo);
 // utils
 int			check_death(t_philo *philo);
 int			check_all_ate(t_meta *meta);
+int			check_alive(t_meta *meta);
 int			exit_error(char *err_msg, char *src, int err_code, t_meta *meta);
 int			check_input(int argc, char **argv);
 long long	get_time(t_meta *meta, int start);

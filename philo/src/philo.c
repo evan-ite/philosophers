@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:39:40 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/02 18:07:17 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,51 @@ int	sleeping(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
+
 static int	grab_forks(t_philo *philo)
 {
-	if (philo->l_fork[1])
+	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&philo->meta->forks[philo->l_fork[0]]);
-		philo->l_fork[1] = 0;
-	}
-	if (!philo->l_fork[1] && philo->r_fork[1])
-	{
-		pthread_mutex_lock(&philo->meta->forks[philo->r_fork[0]]);
-		philo->r_fork[1] = 0;
+		pthread_mutex_lock(&philo->meta->forks[philo->l_fork]);
+		pthread_mutex_lock(&philo->meta->forks[philo->r_fork]);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
-		philo->l_fork[1] = 1;
+		pthread_mutex_lock(&philo->meta->forks[philo->r_fork]);
+		pthread_mutex_lock(&philo->meta->forks[philo->l_fork]);
 	}
-	if (!philo->r_fork[1] && !philo->l_fork[1])
-	{
-		print_lock(philo, "has taken a fork");
-		print_lock(philo, "has taken a fork");
-		return (1);
-	}
-	else
-		return (0);
+	print_lock(philo, "has taken a fork");
+	print_lock(philo, "has taken a fork");
+	return (1);
+	// if (!philo->meta->fork_flag[philo->r_fork] && !philo->meta->fork_flag[philo->l_fork])
+	// 	return (1);
+	// else if (!philo->meta->fork_flag[philo->r_fork])
+	// {
+	// 	philo->meta->fork_flag[philo->r_fork] = 1;
+	// 	pthread_mutex_unlock(&philo->meta->forks[philo->r_fork]);
+	// }
+	// else if (!philo->meta->fork_flag[philo->l_fork])
+	// {
+	// 	philo->meta->fork_flag[philo->l_fork] = 1;
+	// 	pthread_mutex_unlock(&philo->meta->forks[philo->l_fork]);
+	// }
+	// return (0);
 }
 
 int	eat(t_philo *philo)
 {
-	while (1)
+	while (check_alive(philo->meta))
 	{
+		if (philo->meta->n_philos == 1)
+			break ;
 		if (grab_forks(philo))
 		{
 			philo->last_ate = get_time(philo->meta, 0);
 			print_lock(philo, "is eating");
 			philo->times_ate += 1;
 			usleep(philo->meta->t_eat * 1000);
-			philo->r_fork[1] = 1;
-			philo->l_fork[1] = 1;
-			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork[0]]);
-			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork[0]]);
+			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork]);
+			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork]);
 			break ;
 		}
 	}
