@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:16:55 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/02 15:11:05 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:15:31 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]"
 # define ERR_MEM "Error allocating memory"
 # define ERR_MUTEX "Mutex error"
 # define ERR_THD "Thread error"
+
+# define DROP 1
+# define GRAB 0
 
 typedef struct s_philo {
 	pthread_t		thread_id;

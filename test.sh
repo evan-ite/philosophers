@@ -51,19 +51,19 @@ run_test_with_timeout() {
 # Test case 1: Run philo with 1 philosopher
 run_tsan_test "TEST 1" 1 800 200 200
 
-# Test case 2: Run philo with 5 philosophers, no one should die; break after 5 seconds
+# Test case 2: Run philo with 5 philosophers, no one should die; break after 10 seconds
 run_test_with_timeout "TEST 2" 5 800 200 200
 
 # Test case 3: Run philo with 5 philosophers, each needing to eat 7 times
 run_tsan_test "TEST 3" 5 800 200 200 7
 
-# Test case 4: Run philo with 4 philosophers, no one should die; break after 5 seconds
+# Test case 4: Run philo with 4 philosophers, no one should die; break after 10 seconds
 run_test_with_timeout "TEST 4" 4 410 200 200
 
 # Test case 5: Run philo with 4 philosophers, setting time to die, eat, and sleep to 0
 run_tsan_test "TEST 5" 4 0 0 0
 
-# Test case 6: Run philo with 2 philosophers, with a large number of times each philosopher must eat
- run_tsan_test "TEST 6" 4 310 200 100
+# Test case 6: Run philo with 4 philosophers, on should die
+run_tsan_test "TEST 6" 4 310 200 100
 
 make fclean -C $PHILO

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/02 18:22:19 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:26:18 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@ int	check_alive(t_meta *meta)
 static void	*start_philo(void *void_philo)
 {
 	t_philo	*philo;
-	int	count;
 
 	philo = (t_philo *)void_philo;
-	count = 0;
 	while (check_alive(philo->meta))
 	{
-		if (philo->meta->n_philos % 2 != 0 && philo->id == (philo->meta->n_philos - 1))
-
 		if (philo->id % 2 == 0)
 		{
 			eat(philo);
@@ -47,7 +43,6 @@ static void	*start_philo(void *void_philo)
 			think(philo);
 			eat(philo);
 		}
-		count++;
 	}
 	return (NULL);
 }
@@ -95,8 +90,7 @@ int	run(t_meta *meta)
 	{
 		if (pthread_join(meta->philos[i].thread_id, NULL) != 0)
 			return (exit_error(ERR_THD, NULL, 3, meta));
-		meta->philos_flag[i] = 0;
-		i++;
+		meta->philos_flag[i++] = 0;
 	}
 	return (EXIT_SUCCESS);
 }
