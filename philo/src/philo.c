@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/03 15:32:37 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:34:52 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,57 +19,24 @@ int	sleeping(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
-static int	handle_fork(int fork, int to_state, t_philo *philo)
-{
-	pthread_mutex_lock(&philo->meta->forks[fork]);
-	if (philo->meta->fork_flag[fork] == to_state)
-	{
-		pthread_mutex_unlock(&philo->meta->forks[fork]);
-		return (0);
-	}
-	philo->meta->fork_flag[fork] = to_state;
-	pthread_mutex_unlock(&philo->meta->forks[fork]);
-	return (1);
-}
-
-// static int	check_ngrab(int fork1, int fork2, t_philo *philo)
-// {
-// 	int	f1;
-// 	int	f2;
-
-// 	f1  = handle_fork(fork1, GRAB, philo);
-// 	f2 = handle_fork(fork2, GRAB, philo);
-// 	if (f1 && f2)
-// 	{
-// 		print_lock(philo, "has taken a fork");
-// 		print_lock(philo, "has taken a fork");
-// 		return (1);
-// 	}
-// 	else if (f1)
-// 		handle_fork(fork1, DROP, philo);
-// 	else if (f2)
-// 		handle_fork(fork2, DROP, philo);
-// 	return (0);
-// }
-
 static int	grab_forks(t_philo *philo)
 {
-	int	f1;
-	int	f2;
-
-	f1  = handle_fork(philo->l_fork, GRAB, philo);
-	f2 = handle_fork(philo->r_fork, GRAB, philo);
-	if (f1 && f2)
+	if (philo->id % 2 == 0)
 	{
+		if (philo->times_ate == 0)
+			usleep(1000);
+		pthread_mutex_lock(&philo->meta->forks[philo->r_fork]);
 		print_lock(philo, "has taken a fork");
-		print_lock(philo, "has taken a fork");
-		return (1);
+		pthread_mutex_lock(&philo->meta->forks[philo->l_fork]);
 	}
-	else if (f1)
-		handle_fork(philo->l_fork, DROP, philo);
-	else if (f2)
-		handle_fork(philo->r_fork, DROP, philo);
-	return (0);
+	else
+	{
+		pthread_mutex_lock(&philo->meta->forks[philo->l_fork]);
+		print_lock(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->meta->forks[philo->r_fork]);
+	}
+	print_lock(philo, "has taken a fork");
+	return (1);
 }
 
 int	eat(t_philo *philo)
@@ -78,14 +45,16 @@ int	eat(t_philo *philo)
 	{
 		if (philo->meta->n_philos == 1)
 			break ;
+		if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 && philo->times_ate == 0)
+			usleep(philo->meta->t_eat * 1000);
 		if (grab_forks(philo))
 		{
 			philo->last_ate = get_time(philo->meta, 0);
 			print_lock(philo, "is eating");
 			philo->times_ate += 1;
 			usleep(philo->meta->t_eat * 1000);
-			handle_fork(philo->l_fork, DROP, philo);
-			handle_fork(philo->r_fork, DROP, philo);
+			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork]);
+			pthread_mutex_unlock(&philo->meta->forks[philo->r_fork]);
 			break ;
 		}
 	}
@@ -95,6 +64,12 @@ int	eat(t_philo *philo)
 int	think(t_philo *philo)
 {
 	print_lock(philo, "is thinking");
-	usleep(10);
+	if (!(philo->meta->n_philos % 2))
+		usleep(10);
+	else
+		if ((philo->meta->t_die - philo->meta->t_eat - philo->meta->t_sleep) <= 0)
+			usleep(500);
+		else
+			usleep((philo->meta->t_die - philo->meta->t_eat - philo->meta->t_sleep) * 900);
 	return (EXIT_SUCCESS);
 }

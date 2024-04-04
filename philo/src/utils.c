@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:43:32 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/02 12:02:14 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:13:57 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_death(t_philo *philo)
 {
 	if ((get_time(philo->meta, 0) - philo->last_ate) > philo->meta->t_die)
 	{
-		print_lock(philo, "is dead");
+		print_lock(philo, "died");
 		pthread_mutex_lock(&philo->meta->alive);
 		philo->meta->all_alive = 0;
 		pthread_mutex_unlock(&philo->meta->alive);
@@ -59,6 +59,6 @@ void	print_lock(t_philo *philo, char *state)
 	if (!check_alive(philo->meta))
 		return ;
 	pthread_mutex_lock(&philo->meta->print);
-	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);
+	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id, state);
 	pthread_mutex_unlock(&philo->meta->print);
 }

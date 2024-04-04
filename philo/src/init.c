@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:54:18 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/03 12:43:58 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:45:11 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,11 @@ static void	init_philos(t_meta *meta)
 	i = 0;
 	while (i < meta->n_philos)
 	{
-		meta->philos[i].id = i;
+		meta->philos[i].id = i + 1;
 		meta->philos[i].last_ate = get_time(meta, 0);
 		meta->philos[i].times_ate = 0;
-		// if (i == meta->n_philos - 1)
-		// {
-		// 	meta->philos[i].l_fork = i;
-		// 	meta->philos[i].r_fork = (i - 1) % meta->n_philos;
-		// }
-		// else
-		// {
-			meta->philos[i].l_fork = i;
-			meta->philos[i].r_fork = (i + 1) % meta->n_philos;
-		// }
+		meta->philos[i].l_fork = i;
+		meta->philos[i].r_fork = (i + 1) % meta->n_philos;
 		meta->philos[i].meta = meta;
 		meta->philos_flag[i] = 1;
 		i++;
