@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/04 17:34:52 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:20:09 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	eat(t_philo *philo)
 	{
 		if (philo->meta->n_philos == 1)
 			break ;
-		if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 && philo->times_ate == 0)
+		if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 \
+			&& philo->times_ate == 0)
 			usleep(philo->meta->t_eat * 1000);
 		if (grab_forks(philo))
 		{
@@ -67,9 +68,13 @@ int	think(t_philo *philo)
 	if (!(philo->meta->n_philos % 2))
 		usleep(10);
 	else
-		if ((philo->meta->t_die - philo->meta->t_eat - philo->meta->t_sleep) <= 0)
-			usleep(500);
+	{
+		if ((philo->meta->t_die - philo->meta->t_eat \
+			- philo->meta->t_sleep) <= 0)
+			usleep(900);
 		else
-			usleep((philo->meta->t_die - philo->meta->t_eat - philo->meta->t_sleep) * 900);
+			usleep((philo->meta->t_die - philo->meta->t_eat \
+			- philo->meta->t_sleep) * 900);
+	}
 	return (EXIT_SUCCESS);
 }

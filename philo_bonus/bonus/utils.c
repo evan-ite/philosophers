@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:29:56 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/03/29 17:40:19 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:10:42 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_death(t_philo *philo)
 {
 	if ((get_time(philo->meta, 0) - philo->last_ate) > philo->meta->t_die)
 	{
-		print_lock(philo, "is dead");
+		print_lock(philo, "died");
 		sem_wait(philo->meta->print);
 		return (1);
 	}
@@ -47,6 +47,6 @@ int	check_times_ate(t_philo *philo)
 void	print_lock(t_philo *philo, char *state)
 {
 	sem_wait(philo->meta->print);
-	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id + 1, state);
+	printf("%lld %i %s\n", get_time(philo->meta, 0), philo->id, state);
 	sem_post(philo->meta->print);
 }

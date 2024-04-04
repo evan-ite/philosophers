@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/02 14:55:02 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:18:58 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ static int	eat(t_philo *philo)
 {
 	if (grab_forks(philo))
 	{
+		if (philo->meta->n_philos == 1)
+			return (EXIT_SUCCESS);
+		if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 \
+			&& philo->times_ate == 0)
+			usleep(philo->meta->t_eat * 1000);
 		philo->last_ate = get_time(philo->meta, 0);
 		print_lock(philo, "is eating");
 		philo->times_ate += 1;
@@ -42,21 +47,29 @@ static int	eat(t_philo *philo)
 	return (EXIT_SUCCESS);
 }
 
+static int	think(t_philo *philo)
+{
+	print_lock(philo, "is thinking");
+	if (!(philo->meta->n_philos % 2))
+		usleep(10);
+	else
+	{
+		if ((philo->meta->t_die - philo->meta->t_eat \
+			- philo->meta->t_sleep) <= 0)
+			usleep(900);
+		else
+			usleep((philo->meta->t_die - philo->meta->t_eat \
+			- philo->meta->t_sleep) * 900);
+	}
+	return (EXIT_SUCCESS);
+}
+
 void	run_philo(t_philo *philo)
 {
 	while (1)
 	{
-		if (philo->id % 2 == 0)
-		{
-			sleeping(philo);
-			print_lock(philo, "is thinking");
-			eat(philo);
-		}
-		else
-		{
-			eat(philo);
-			sleeping(philo);
-			print_lock(philo, "is thinking");
-		}
+		eat(philo);
+		sleeping(philo);
+		think(philo);
 	}
 }

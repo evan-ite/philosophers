@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:55:29 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/02 15:04:18 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:17:48 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_philos(t_meta *meta)
 	i = 0;
 	while (i < meta->n_philos)
 	{
-		meta->philos[i].id = i;
+		meta->philos[i].id = i + 1;
 		meta->philos[i].last_ate = get_time(meta, 0);
 		meta->philos[i].times_ate = 0;
 		meta->philos[i].meta = meta;
@@ -31,13 +31,11 @@ static void	init_philos(t_meta *meta)
 static int	check_values(t_meta *meta)
 {
 	if (meta->t_die < 60 || meta->t_eat < 60 || \
-		meta->t_sleep < 60 || !meta->n_must_eat)
-		return (exit_error("Times must be grater than 60ms", NULL, 2, meta));
-	if (meta->n_philos == 1)
-	{
-		printf("%lld %i %s\n", get_time(meta, 0), 1, "is dead");
-		return (exit_error(NULL, NULL, 1, meta));
-	}
+		meta->t_sleep < 60)
+		return (exit_error("Times must be greater than 60ms", NULL, 2, meta));
+	if (!meta->n_must_eat)
+		return (exit_error("Time to eat must be greater than 0", \
+		NULL, 2, meta));
 	return (EXIT_SUCCESS);
 }
 

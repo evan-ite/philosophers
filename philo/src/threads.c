@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:27:12 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/04 17:04:40 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:20:24 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static void	*start_philo(void *void_philo)
 	philo = (t_philo *)void_philo;
 	while (check_alive(philo->meta))
 	{
-			eat(philo);
-			sleeping(philo);
-			think(philo);
+		eat(philo);
+		sleeping(philo);
+		think(philo);
 	}
 	return (NULL);
 }
