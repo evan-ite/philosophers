@@ -6,11 +6,20 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 12:32:23 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/05 13:05:16 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:44:49 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo_bonus.h"
+
+static void	post_semaphores(t_meta *meta)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < meta->n_philos)
+		sem_post(meta->stop);
+}
 
 static void	*monitor(void *void_philo)
 {
@@ -24,6 +33,8 @@ static void	*monitor(void *void_philo)
 		{
 			sem_post(philo->meta->stop);
 			sem_post(philo->meta->death);
+			if (philo->meta->n_must_eat > 0)
+				post_semaphores(philo->meta);
 			break ;
 		}
 		else if (check_times_ate(philo))

@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/05 11:28:54 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:55:43 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ static int	grab_forks(t_philo *philo)
 
 static int	eat(t_philo *philo)
 {
+	if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 \
+		&& philo->times_ate == 0)
+		usleep(philo->meta->t_eat * 1000);
 	if (grab_forks(philo))
 	{
 		if (philo->meta->n_philos == 1)
 			return (EXIT_SUCCESS);
-		if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 \
-			&& philo->times_ate == 0)
-			usleep(philo->meta->t_eat * 1000);
 		philo->last_ate = get_time(philo->meta, 0);
 		print_lock(philo, "is eating");
 		philo->times_ate += 1;
