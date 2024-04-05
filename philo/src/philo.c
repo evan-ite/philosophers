@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/05 11:33:14 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:31:24 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ static int	grab_forks(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->meta->forks[philo->l_fork]);
 		print_lock(philo, "has taken a fork");
+		if (philo->meta->n_philos == 1)
+		{
+			while (check_alive(philo->meta));
+			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork]);
+			return (0);
+		}
 		pthread_mutex_lock(&philo->meta->forks[philo->r_fork]);
 	}
 	print_lock(philo, "has taken a fork");
@@ -43,8 +49,6 @@ int	eat(t_philo *philo)
 {
 	while (check_alive(philo->meta))
 	{
-		if (philo->meta->n_philos == 1)
-			break ;
 		if (philo->id == 1 && (philo->meta->n_philos % 2) != 0 \
 			&& philo->times_ate == 0)
 			usleep(philo->meta->t_eat * 1000);
