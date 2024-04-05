@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# YOU NEED TO ADD THE FLAGS -fsanitize=thread -lpthread
-# TO YOUR COMPILER/MAKEFILE
+#---------------------------------------------------------------------
+# YOU NEED TO ADD THE FLAG -fsanitize=thread TO YOUR COMPILER/MAKEFILE
+# THE TESTS ARE BASED ON EXIT CODE, IT SHOULD BE EITHER 0 OR 1 FOR SUCCES
+#---------------------------------------------------------------------
 
 # Check if the executable is run with "bonus" as the second argument
 if [[ $# -lt 1 || "$1" != "bonus" ]]; then
