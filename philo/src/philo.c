@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 12:51:46 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/05 12:31:24 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:34:05 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static int	grab_forks(t_philo *philo)
 		print_lock(philo, "has taken a fork");
 		if (philo->meta->n_philos == 1)
 		{
-			while (check_alive(philo->meta));
+			while (check_alive(philo->meta))
+				;
 			pthread_mutex_unlock(&philo->meta->forks[philo->l_fork]);
 			return (0);
 		}
