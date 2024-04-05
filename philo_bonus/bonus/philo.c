@@ -6,7 +6,7 @@
 /*   By: evan-ite <evan-ite@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:35:38 by evan-ite          #+#    #+#             */
-/*   Updated: 2024/04/04 18:18:58 by evan-ite         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:28:54 by evan-ite         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static int	sleeping(t_philo *philo)
 
 static int	grab_forks(t_philo *philo)
 {
+	if (philo->id % 2 == 0)
+	{
+		if (philo->times_ate == 0)
+			usleep(1000);
+	}
 	sem_wait(philo->meta->forks);
 	print_lock(philo, "has taken a fork");
 	sem_wait(philo->meta->forks);
